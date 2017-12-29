@@ -4,6 +4,9 @@ declare (strict_types = 1);
 namespace KiwiJuicer\Mvc;
 
 use KiwiJuicer\Mvc\Authentication\AuthenticationInterface;
+use KiwiJuicer\Mvc\Authentication\AuthenticationManager;
+use KiwiJuicer\Mvc\Authentication\DummyAuthentication;
+use KiwiJuicer\Mvc\Authentication\SessionAuthentication;
 use KiwiJuicer\Mvc\Authentication\UserAuthentication;
 use KiwiJuicer\Mvc\Exception\Handler;
 use KiwiJuicer\Mvc\Http\Request;
@@ -73,6 +76,27 @@ class Application
     }
 
     /**
+     * Returns authentication manager
+     *
+     * @param array|null $config
+     * @return \KiwiJuicer\Mvc\Authentication\AuthenticationManager
+     */
+    protected function getAuthenticationManager(array $config = null): AuthenticationManager
+    {
+        $authenticationManager = new AuthenticationManager();
+
+        if ($config !== null && array_key_exists('classes', $config)) {
+            foreach ((array)$config['classes'] as $authenticatorFqn) {
+                $authenticationManager->addAuthenticator(self::getDependencyManager()->get($authenticatorFqn));
+            }
+        } else {
+            $authenticationManager->addAuthenticator(new DummyAuthentication());
+        }
+
+        return $authenticationManager;
+    }
+
+    /**
      * Runs the application
      *
      * @var void
@@ -81,11 +105,7 @@ class Application
     {
         $route = Router::match(self::getDependencyManager()->get(Request::class));
 
-        if (self::getDependencyManager()->has(AuthenticationInterface::class)) {
-            $authentication = new UserAuthentication(self::getDependencyManager()->get(AuthenticationInterface::class));
-        }
-
-        $router = new Router($authentication ?? null);
+        $router = new Router($this->getAuthenticationManager(self::getConfig()['authentication'] ?? null));
 
         $router->routeTo($route);
     }

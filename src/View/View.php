@@ -4,6 +4,8 @@ declare (strict_types = 1);
 namespace KiwiJuicer\Mvc\View;
 
 use KiwiJuicer\Mvc\Application;
+use KiwiJuicer\Mvc\Authentication\AuthenticationInterface;
+use KiwiJuicer\Mvc\Authentication\AuthenticationRepresentationInterface;
 
 /**
  * View
@@ -55,7 +57,7 @@ class View
      * @param array|null $injectVariables
      * @throws \InvalidArgumentException
      */
-    public function __construct(string $templatePath, array $injectVariables = null)
+    public function __construct(string $templatePath, array $injectVariables = null, AuthenticationInterface $authentication = null)
     {
         $config = Application::getConfig();
 
@@ -111,6 +113,8 @@ class View
                 $this->templatePath = $templatePath;
             }
         }
+
+        $this->variables['isAuthenticated'] = $authentication !== null ? $authentication->isAuthenticated() : false;
 
         if ($injectVariables !== null) {
 

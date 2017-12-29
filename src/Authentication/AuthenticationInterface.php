@@ -16,9 +16,9 @@ interface AuthenticationInterface
      *
      * @param string $user
      * @param string $password
-     * @return bool
+     * @return AuthenticationRepresentationInterface
      */
-    public function authenticate(string $user, string $password): bool;
+    public function authenticate(string $user, string $password): ?AuthenticationRepresentationInterface;
 
     /**
      * Destroys the authentication

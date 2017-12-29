@@ -34,9 +34,9 @@ class Router
     /**
      * Router Constructor
      *
-     * @param \KiwiJuicer\Mvc\Authentication\AuthenticationInterface|null $authentication
+     * @param \KiwiJuicer\Mvc\Authentication\AuthenticationInterface $authentication
      */
-    public function __construct(AuthenticationInterface $authentication = null)
+    public function __construct(AuthenticationInterface $authentication)
     {
         $this->authentication = $authentication;
     }
@@ -74,7 +74,7 @@ class Router
     public function routeTo(Route $route): void
     {
         // Check for authentication
-        if ($this->authentication !== null && $route->needsAuthentication() && !$this->authentication->isAuthenticated()) {
+        if ($route->needsAuthentication() && !$this->authentication->isAuthenticated()) {
             self::redirect('/login', [
                 'old-uri' => $route->getPath()
             ]);
@@ -106,7 +106,7 @@ class Router
             $template = $directory . '/' . $route->getActionName() . '.phtml';
         }
 
-        $view = new View($template, $viewParams);
+        $view = new View($template, $viewParams, $this->authentication);
 
         $view->show();
     }

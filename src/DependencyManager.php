@@ -45,12 +45,20 @@ class DependencyManager implements ContainerInterface
     protected $log;
 
     /**
+     * Authentications
+     *
+     * @var array
+     */
+    protected $authentications;
+
+    /**
      * Dependency Manager
      *
      * @param array $config
      */
     public function __construct(array $config)
     {
+        $this->authentications = $config['authentications'] ?? [];
         $this->invokables = $config['invokables'] ?? [];
         $this->factories = $config['factories'] ?? [];
         $this->managers = $config['managers'] ?? [];
@@ -90,6 +98,11 @@ class DependencyManager implements ContainerInterface
             return new $this->invokables[$name]();
         }
 
+        // Authentications
+        if (array_key_exists($name, $this->authentications)) {
+            return $this->get($this->authentications[$name]);
+        }
+
         // Logger
         if (array_key_exists($name, $this->log)) {
 
@@ -103,6 +116,11 @@ class DependencyManager implements ContainerInterface
             }
 
             return $logger;
+        }
+
+        // Session
+        if (mb_strtolower($name) === 'session') {
+            return $_SESSION;
         }
 
         throw new ClassNotFoundException('Requested dependency ' . $name . ' not found, are you certain that you provided the configuration?');

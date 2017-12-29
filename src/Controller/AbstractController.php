@@ -30,7 +30,7 @@ abstract class AbstractController
      *
      * @param \KiwiJuicer\Mvc\Authentication\AuthenticationInterface $authentication
      */
-    public function setAuthentication(AuthenticationInterface $authentication = null): void
+    public function setAuthentication(AuthenticationInterface $authentication): void
     {
         $this->authentication = $authentication;
     }
@@ -40,7 +40,7 @@ abstract class AbstractController
      *
      * @return \KiwiJuicer\Mvc\Authentication\AuthenticationInterface
      */
-    public function getAuthentication(): ?AuthenticationInterface
+    public function getAuthentication(): AuthenticationInterface
     {
         return $this->authentication;
     }
