@@ -30,7 +30,9 @@ class DummyAuthentication implements AuthenticationInterface
      */
     public function authenticate(string $email, string $password): AuthenticationRepresentationInterface
     {
-        return true;
+        /** @var \KiwiJuicer\Mvc\Authentication\AuthenticationRepresentationInterface $authenticationRepresentation */
+       $authenticationRepresentation = new \ReflectionClass(AuthenticationRepresentationInterface::class);
+       return $authenticationRepresentation;
     }
 
     /**
