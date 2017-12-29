@@ -1,11 +1,11 @@
 {
-  "name": "kiwi-juicer/mvc",
+  "name": "kiwi-juicer/php-mvc",
   "license": "MIT",
-  "description": "A simple mvc package",
+  "description": "A simple php mvc package",
   "keywords": [
     "mvc"
   ],
-  "homepage": "https://github.com/KiwiJuicer/mvc",
+  "homepage": "https://github.com/KiwiJuicer/php-mvc",
   "autoload": {
     "psr-4": {
       "KiwiJuicer\\Mvc\\":"src"
