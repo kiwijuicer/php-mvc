@@ -38,6 +38,6 @@ class Db
 
         $dbConfig = $config[$dbName];
 
-        return new \PDO($dbConfig['dsn'], $dbConfig['username'], $dbConfig['password'], $dbConfig['driver_options'] ?? []);
+        return self::$connectionPool[$dbName] = new \PDO($dbConfig['dsn'], $dbConfig['username'], $dbConfig['password'], $dbConfig['driver_options'] ?? []);
     }
 }
