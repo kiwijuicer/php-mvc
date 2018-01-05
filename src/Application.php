@@ -38,14 +38,14 @@ class Application
     /**
      * Inits application with dependency manager and returns instance of itself
      *
-     * @param array $configs
+     * @param array $config
      * @return \KiwiJuicer\Mvc\Application
      */
-    public static function init(array $configs): self
+    public static function init(array $config): self
     {
         session_start();
 
-        self::$config = array_merge(...$configs);
+        self::$config = $config;
 
         self::$dependencyManager = new DependencyManager(self::$config['dependencies'] ?? []);
 
