@@ -19,11 +19,11 @@ abstract class AbstractSessionAuthentication implements AuthenticationInterface
     const AUTHENTICATION_KEY = '_authentication';
 
     /**
-     * The authorisation representation
+     * The authentication representation
      *
      * @var \KiwiJuicer\Mvc\Authentication\AuthenticationRepresentationInterface
      */
-    protected $authorisationRepresentation;
+    protected $authenticationRepresentation;
 
     /**
      * Checks for authentication
@@ -41,7 +41,7 @@ abstract class AbstractSessionAuthentication implements AuthenticationInterface
      * @param \KiwiJuicer\Mvc\Authentication\AuthenticationRepresentationInterface $authenticationRepresentation
      * @return void
      */
-    public function setAuthorisationRepresentation(AuthenticationRepresentationInterface $authenticationRepresentation): void
+    public function setAuthenticationRepresentation(AuthenticationRepresentationInterface $authenticationRepresentation): void
     {
         $_SESSION[static::AUTHENTICATION_KEY] = $authenticationRepresentation;
     }
