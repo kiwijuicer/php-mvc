@@ -7,8 +7,7 @@ namespace KiwiJuicer\Mvc;
  * Config Provider
  *
  * @package KiwiJuicer\Mvc
- * @author Norbert Hanauer <norbert.hanauer@check24.de>
- * @copyright CHECK24 Vergleichsportal GmbH
+ * @author Norbert Hanauer <info@norbert-hanauer.de>
  */
 class ConfigProvider
 {
